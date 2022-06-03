@@ -1,0 +1,20 @@
+{
+  "name": "quasselstrippe-visualisation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "lowdb": "^3.0.0",
+    "node-data-editor": "^0.0.14"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  }
+}
