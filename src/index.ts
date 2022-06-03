@@ -1,5 +1,6 @@
 import DataEditor from 'node-data-editor'
 import { LowDbAdapter } from './lowdb-adapter.js'
+import { config } from './config.js'
 
 const submissionModel = new DataEditor.DataModel({
   schema: {
@@ -12,7 +13,7 @@ const submissionModel = new DataEditor.DataModel({
       timestamp: { type: 'number', default: 0 }
     },
     primaryKey: 'id',
-    required: ['id'],
+    required: ['id', "quasselstrippe"],
     titleTemplate: '<%= quasselstrippe %>:<%= id %>'
   },
   adapter: new LowDbAdapter('data/database.json', 'submissions', 'id', [])
@@ -37,5 +38,9 @@ const quasselstrippeModel = new DataEditor.DataModel({
 
 DataEditor.start({
   models: [submissionModel, quasselstrippeModel],
-  port: 3000
+  port: 3000,
+  credentials: {
+    login: config.credentials_name,
+    password: config.credentials_password
+  }
 }).then((server) => { console.log('Editor is available on localhost:3000') })
