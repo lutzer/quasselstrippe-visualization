@@ -2,9 +2,10 @@
   "name": "quasselstrippe-visualisation",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "exports": "./index.js",
   "scripts": {
-    "start": "node index.js",
+    "build": "npx tsc",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +16,9 @@
     "node-data-editor": "^0.0.14"
   },
   "devDependencies": {
+    "node-dev": "^7.4.3",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.2"
-  }
+  },
+  "type": "module"
 }

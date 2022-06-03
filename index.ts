@@ -1,4 +1,5 @@
 import DataEditor from 'node-data-editor'
+import { LowDbAdapter } from './lowdb-adapter.js'
 
 const submissionModel = new DataEditor.DataModel({
   schema: {
@@ -14,7 +15,7 @@ const submissionModel = new DataEditor.DataModel({
     required: ['id'],
     titleTemplate: '<%= quasselstrippe %>:<%= id %>'
   },
-  adapter: new DataEditor.MemoryAdapter([], 'id')
+  adapter: new LowDbAdapter('data/database.json', 'submissions', 'id', [])
 })
 
 const quasselstrippeModel = new DataEditor.DataModel({
@@ -30,7 +31,7 @@ const quasselstrippeModel = new DataEditor.DataModel({
     links : [ { model: 'submissions', key: 'name', foreignKey: 'quasselstrippe' } ]
 
   },
-  adapter: new DataEditor.MemoryAdapter([], 'name')
+  adapter: new LowDbAdapter('data/database.json', 'quasselstrippen', 'name', [])
 })
 
 
