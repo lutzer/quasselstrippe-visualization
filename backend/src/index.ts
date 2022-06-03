@@ -1,6 +1,8 @@
 import DataEditor from 'node-data-editor'
 import { LowDbAdapter } from './lowdb-adapter.js'
 import { config } from './config.js'
+import httpProxy from 'http-proxy'
+import http from 'http'
 
 const submissionModel = new DataEditor.DataModel({
   schema: {
@@ -34,6 +36,16 @@ const quasselstrippeModel = new DataEditor.DataModel({
   },
   adapter: new LowDbAdapter('data/database.json', 'quasselstrippen', 'name', [])
 })
+
+// var proxy = httpProxy.createProxyServer();
+// http.createServer(function (req, res) {
+//   const { url } = req 
+//   if (url?.startsWith("/api/")) {
+//     proxy.web(req, res, { target: 'http://localhost:3000/api/' });
+//   }
+
+  
+// }).listen(8008);
 
 
 DataEditor.start({
