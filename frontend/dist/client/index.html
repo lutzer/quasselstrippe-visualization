@@ -3,16 +3,49 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Three.js TypeScript Tutorials by Sean Bradley</title>
+        <title>Quasselstrippe</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
         <style>
             body {
                 overflow: hidden;
                 margin: 0px;
+                font-family: 'VT323', monospace;
+                font-size: 18pt;
+                letter-spacing: 0.13em;
+            }
+
+            #text {
+                position: absolute;
+                bottom: 10%;
+                text-align: center;
+                width:80%;
+                margin: 0 10%;
+            }
+
+            #question {
+                color: #ffec43;
+            }
+
+            #answer {
+                color: #b4e4ff;
             }
         </style>
     </head>
 
     <body>
         <script type="module" src="bundle.js"></script>
+        <div id="text">
+            <p id="question">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+            <p id="answer">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Quisque ac eros et massa convallis laoreet ut sit amet felis. 
+                Aliquam molestie rhoncus euismod. Suspendisse non gravida magna, 
+                ac consequat ante. Ut ultrices, dui et auctor ultrices, 
+            </p>
+        </div>
     </body>
 </html>

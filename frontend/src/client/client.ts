@@ -1,6 +1,20 @@
 import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import axios from "axios"
+import * as _ from 'lodash'
+import { has, random } from 'lodash'
+
+const API_ADDRESS = "http://localhost:3000/api/submissions/"
+const API_FETCH_INTERVAL = 5000
+const CREDENTIALS = { username: "admin", password: "password"}
+
+
+type Submission = {
+    id : string,
+    data : { time: number, value: string, topic: string }[],
+    timestamp: number
+}
 
 async function setup() {
     const scene = new THREE.Scene()
@@ -23,8 +37,25 @@ async function setup() {
     //setup camera controls
     const controls = new OrbitControls(camera, renderer.domElement)
 
+    // add dose
     var dose: THREE.Group = await loadAsset_Dose('./assets/dose3.obj')
     scene.add(dose)
+
+    //add cable
+    // const geometry = createCableSpline(50)
+    // const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+    // const curveObject = new THREE.Line( geometry, material );
+    // scene.add(curveObject)
+
+    // fetch submissions every few seconds
+    setInterval(() => {
+        fetchSubmissions().then((entries) => {
+            let submission = _.sample(entries)
+            if (submission)
+                displaySubmission(submission, _.random(0, submission.data.length))
+        }).catch((err) => console.error(err))
+    }, API_FETCH_INTERVAL)
+    
 
     window.addEventListener('resize', onWindowResize, false)
     function onWindowResize() {
@@ -39,7 +70,7 @@ async function setup() {
     
         if (dose) {
             dose.rotation.y = Math.sin(time * 0.001) * 0.1
-            dose.rotation.z += 0.01
+            dose.rotation.z += 0.015
         }
         
         controls.update()
@@ -48,6 +79,18 @@ async function setup() {
 }
 
 setup()
+
+function createCableSpline( numberOfPoints: number) : THREE.BufferGeometry {
+    const curve = new THREE.CatmullRomCurve3( [
+        new THREE.Vector3( -10, 0, 10 ),
+        new THREE.Vector3( -5, 5, 5 ),
+        new THREE.Vector3( 0, 0, 0 ),
+        new THREE.Vector3( 5, -5, 5 ),
+        new THREE.Vector3( 10, 0, 10 )
+    ] );
+    const points = curve.getPoints(numberOfPoints);
+    return new THREE.BufferGeometry().setFromPoints( points );
+}
 
 async function loadAsset_Dose(path: string) : Promise<THREE.Group> {
     return new Promise( (resolve, reject) => {
@@ -77,4 +120,36 @@ async function loadAsset_Dose(path: string) : Promise<THREE.Group> {
             (err) => reject(err)
         )
     })
+}
+
+async function fetchSubmissions() : Promise<Submission[]> {
+    let result = await axios.get(API_ADDRESS, {
+        auth: {
+            username: CREDENTIALS.username,
+            password: CREDENTIALS.password
+          }
+    })
+    return result.data.entries.map((e : any) => e.data);
+}
+
+function displaySubmission(submission: Submission, entryIndex: number) {
+    if (submission.data.length < entryIndex)
+        return
+
+    console.log(submission)
+
+    let entry = submission.data[entryIndex];
+
+    if (!_.has(entry,"topic") || !_.has(entry,"value"))
+        return;
+
+        console.log(entry)
+    
+    var questionElement = document.getElementById("question");
+    var answerElement = document.getElementById("answer");
+
+    if (questionElement)
+        questionElement.innerHTML = submission.data[entryIndex].topic || ""
+    if (answerElement)
+        answerElement.innerHTML = submission.data[entryIndex].value || ""
 }
