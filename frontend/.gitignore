@@ -1,2 +1,3 @@
 node_modules
-build
+dist/client/bundle.js
+dist/server/server.js
