@@ -1,7 +1,10 @@
 import DataEditor, { DataSchema } from 'node-data-editor'
-import path from 'path'
 import { Low, JSONFile } from 'lowdb'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
+import path from 'path'
+
+import {fileURLToPath} from 'url'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 type JsonDict = { [id: string] : any[] }
 type Options = { initialData?: any[], autoIncrement?: boolean, autoTimestamp?: boolean }
@@ -22,7 +25,7 @@ class LowDbAdapter<DataType extends JsonDict> extends DataEditor.Adapter {
   }
 
   async getDatabase() : Promise<Low<DataType>> {
-    const adapter = new JSONFile<DataType>(this.file)
+    const adapter = new JSONFile<DataType>(path.join(__dirname,this.file))
     const db = new Low(adapter)
     await db.read()
 
