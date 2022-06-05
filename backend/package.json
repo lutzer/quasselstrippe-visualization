@@ -2,13 +2,13 @@
   "name": "quasselstrippe-visualisation",
   "version": "1.0.0",
   "description": "",
-  "exports": "./index.js",
+  "exports": "./dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
+    "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:src": "npx tsc --watch",
-    "watch:dist": "npx nodemon dist/index.js",
+    "watch:dist": "npx nodemon --watch dist dist/index.js",
     "dev": "concurrently npm:watch:*"
   },
   "author": "",
@@ -17,10 +17,12 @@
     "http-proxy": "^1.18.1",
     "lodash": "^4.17.21",
     "lowdb": "^3.0.0",
-    "node-data-editor": "^0.0.14"
+    "node-data-editor": "file:../../node-data-editor",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/http-proxy": "^1.17.9",
+    "@types/uuid": "^8.3.4",
     "concurrently": "^7.2.1",
     "nodemon": "^2.0.16",
     "typescript": "^4.7.2"

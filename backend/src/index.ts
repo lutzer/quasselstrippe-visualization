@@ -8,17 +8,17 @@ const submissionModel = new DataEditor.DataModel({
   schema: {
     $id: 'submissions',
     properties: {
-      id: { type: 'string', minLength: 1 },
+      id: { type: 'string', readonly : true, autoIncrement: true },
       quasselstrippe: { type: 'string', minLength: 1 },
-      answers: { type: 'array', default: [] },
+      data: { type: 'array', default: [] },
       hide: { type: 'boolean', default: false },
-      timestamp: { type: 'number', default: 0 }
+      timestamp: { type: 'number', default: 0, readonly: true }
     },
     primaryKey: 'id',
-    required: ['id', "quasselstrippe"],
+    required: ['quasselstrippe'],
     titleTemplate: '<%= quasselstrippe %>:<%= id %>'
   },
-  adapter: new LowDbAdapter('data/database.json', 'submissions', 'id', [])
+  adapter: new LowDbAdapter('data/database.json', 'submissions', 'id', { autoIncrement: true, autoTimestamp: true })
 })
 
 const quasselstrippeModel = new DataEditor.DataModel({
@@ -34,7 +34,7 @@ const quasselstrippeModel = new DataEditor.DataModel({
     links : [ { model: 'submissions', key: 'name', foreignKey: 'quasselstrippe' } ]
 
   },
-  adapter: new LowDbAdapter('data/database.json', 'quasselstrippen', 'name', [])
+  adapter: new LowDbAdapter('data/database.json', 'quasselstrippen', 'name')
 })
 
 // var proxy = httpProxy.createProxyServer();
