@@ -1,0 +1,24 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "canvas-sketch src/sketch.ts --open -- -p [ tsify --noImplicitAny ]",
+    "build": "canvas-sketch src/sketch.ts --build --dir ./build/ -- -p [ tsify --noImplicitAny ] "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-sketch": "^0.7.5",
+    "three": "^0.141.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.40",
+    "@types/three": "^0.141.0",
+    "tsify": "^5.0.4",
+    "typescript": "^4.7.3"
+  },
+  "description": ""
+}
