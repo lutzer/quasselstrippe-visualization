@@ -5,10 +5,8 @@ import axios from "axios"
 import * as _ from 'lodash'
 import { has, random } from 'lodash'
 
-const API_ADDRESS = "http://localhost:3000/api/submissions/"
+const API_ADDRESS = "/api/submissions/"
 const API_FETCH_INTERVAL = 5000
-const CREDENTIALS = { username: "admin", password: "password"}
-
 
 type Submission = {
     id : string,
@@ -123,10 +121,16 @@ async function loadAsset_Dose(path: string) : Promise<THREE.Group> {
 }
 
 async function fetchSubmissions() : Promise<Submission[]> {
+
+    const queryString = window.location.search; 
+    const urlParams = new URLSearchParams(queryString);
+    const username = urlParams.get('username') || ""
+    const password = urlParams.get('password') || ""
+
     let result = await axios.get(API_ADDRESS, {
         auth: {
-            username: CREDENTIALS.username,
-            password: CREDENTIALS.password
+            username: username,
+            password: password
           }
     })
     return result.data.entries.map((e : any) => e.data);
@@ -135,15 +139,9 @@ async function fetchSubmissions() : Promise<Submission[]> {
 function displaySubmission(submission: Submission, entryIndex: number) {
     if (submission.data.length < entryIndex)
         return
-
-    console.log(submission)
-
     let entry = submission.data[entryIndex];
-
     if (!_.has(entry,"topic") || !_.has(entry,"value"))
         return;
-
-        console.log(entry)
     
     var questionElement = document.getElementById("question");
     var answerElement = document.getElementById("answer");
