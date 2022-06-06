@@ -3,9 +3,26 @@
 ## Build App
 
 * install dependencies `npm --prefix ./frontend i && npm --prefix ./server i`
-* build apps with `npm run build`
+* build frontend with `cd frontend && npm run build`
+* build server with `cd server && npm run build`
 * run server with `npm start`
-* frontend is reachable on port 3000 and backend on 3001
+* frontend is reachable on port 3000 and backend on 
+
+## Run in docker container
+
+```
+# clone this repository locally
+git clone https://github.com/lutzer/quasselstrippe-visualization.git
+# edit docker-compose.yml and set ADMIN_USERNAME and ADMIN_PASSWORD
+nano docker-compose.yml
+# build docker image
+docker-compose build
+# run docker container in detached mode
+docker-compose up -d
+
+# you can enter the docker container with
+docker exec -it memories_of_the_future_server_1 /bin/sh
+```
 
 ## Setup Raspberry Pi for usage with crt Monitor
 
